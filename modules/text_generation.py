@@ -247,7 +247,8 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
         generate_params.update({'synced_gpus': True})
 
     # Encode the input
-    input_ids = encode(question, add_bos_token=state['add_bos_token'], truncation_length=get_max_prompt_length(state))
+    add_special_tokens = not shared.model_name.startswith("japanese-gpt-neox-3.6b")
+    input_ids = encode(question, add_bos_token=state['add_bos_token'], truncation_length=get_max_prompt_length(state), add_special_tokens=add_special_tokens)
     output = input_ids[0]
     cuda = not any((shared.args.cpu, shared.args.deepspeed))
 

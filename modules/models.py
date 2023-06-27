@@ -111,6 +111,10 @@ def load_tokenizer(model_name, model):
             tokenizer.pad_token_id = 0
         except:
             pass
+    elif model_name.startswith("japanese-gpt-neox-3.6b"):
+        path_to_model = Path(f"{shared.args.model_dir}/{model_name}/")
+        if path_to_model.exists():
+            tokenizer = AutoTokenizer.from_pretrained(path_to_model,trust_remote_code=shared.args.trust_remote_code, use_fast=False)
     else:
         path_to_model = Path(f"{shared.args.model_dir}/{model_name}/")
         if path_to_model.exists():
